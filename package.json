@@ -1,0 +1,23 @@
+{
+  "name": "recipe-app-team-sabrina",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/August-2022-KC-LCW-LiftOff/recipe-app-team-sabrina.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/August-2022-KC-LCW-LiftOff/recipe-app-team-sabrina/issues"
+  },
+  "homepage": "https://github.com/August-2022-KC-LCW-LiftOff/recipe-app-team-sabrina#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.1.8"
+  }
+}

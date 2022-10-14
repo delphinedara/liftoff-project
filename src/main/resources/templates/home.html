@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="fragments :: head"></head>
+<body>
+<div th:replace="fragments :: page-header-logged-in"></div>
+
+<div class="main-contents">
+    <div th:replace="fragments :: searchBar"></div>
+    <div class="mt-16">
+        <h1 class="text-3xl" th:text="${'Welcome Back '+ userName+'!'}">Welcome Back ${user.name}!</h1>
+        <div class="mt-12">
+            <div class="flex space-x-96 flex-col sm:flex-row">
+                <a href="/recipe/add">Create a Recipe</a>
+                <a href="/cookbook/add">Create a Cookbook</a>
+                <a href="/cookbook/view">View My Cookbooks</a>
+            </div>
+
+            <main class="my-8">
+<!--            TODO -This bottom margin at 10rem is not a good long term solution, but for now was the -->
+<!--                fastest way I could think of to get things to lay out ok - -->
+                <div class="mt-16" style="margin-bottom: 10rem;">
+                    <h2 class="text-xl">My Recipes</h2>
+                    <div class="h-56 flex flex-wrap gap-6 mt-6">
+                        <div th:replace="fragments :: view-recipes"></div>
+                    </div>
+                </div>
+
+                <div class="mt-16">
+                    <h2 class="text-xl">My Saved Recipes</h2>
+                    <div class="h-56 flex flex-wrap gap-6 mt-6">
+                        <div th:replace="fragments :: view-savedRecipes"></div>
+                    </div>
+                </div>
+            </main>
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

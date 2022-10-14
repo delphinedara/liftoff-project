@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<div th:replace="fragments :: page-header"></div>
+
+<div class="main-contents">
+    <div class="mt-16">
+    <h1 class="text-3xl">Sign In</h1>
+        <div class="mt-12">
+
+    <!--<div>
+        <form method="post" th:action="@{search/list-recipes/results}">
+            <input type="text" th:name="searchTerm" th:value="${searchTerm}">
+            <input type="submit" value="search">
+        </form>
+    </div>-->
+
+    <div>
+        <form method="post" th:action="@{/login}">
+            <div class="form-group">
+                <label th:for="username">Username
+                    <input class="form-control" th:field="${loginFormDTO.username}">
+                </label>
+                <p class="error" th:errors="${loginFormDTO.username}"></p>
+            </div>
+            <div class="form-group">
+                <label>Password
+                    <input class="form-control" th:field="${loginFormDTO.password}" type="password">
+                </label>
+                <p class="error" th:errors="${loginFormDTO.password}"></p>
+            </div>
+
+            <button class="btn btn-primary">Log In</button>
+        </form>
+
+        <p>Don't have an account? <a class="link-style" href="/register">Register for one.</a></p>
+    </div>
+
+
+<!--    <div style="margin-top: 3%; margin-bottom: 1%; margin-left: 3%; margin-right: 3%">-->
+<!--        <div th:replace="fragments :: view-recipes">-->
+<!--        </div>-->
+<!--    </div>-->
+        </div>
+    </div>
+
+
+
+</div>
+
+</body>
+</html>

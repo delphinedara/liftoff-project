@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<div th:if="${isUserLoggedIn}">
+    <div th:replace="fragments :: page-header-logged-in"></div>
+</div>
+<div th:unless="${isUserLoggedIn}">
+    <div th:replace="fragments :: page-header"></div>
+</div>
+
+
+<div class="main-contents">
+    <div class="mt-16">
+        <div th:if="${searchTerm}">
+            <p th:text="${'Search Term ' + searchTerm}"></p>
+        </div>
+
+        <div th:if="${recipeAuthor}">
+            <h1 th:text="${'Recipes by '+ recipeAuthor.username}"></h1>
+        </div>
+
+        <div th:if="${recipes.isEmpty()}">
+            <p th:text="${'There are no results for '+searchTerm}">There are no results</p>
+            <div th:if="${isUserLoggedIn}">
+                <p>Please <a class="link-style" href="/recipe/add">Add a Recipe</a></p>
+            </div>
+            <div th:if="${!isUserLoggedIn}">
+                <p>Please <a class="link-style" href="/register">Sign Up</a> or <a class="link-style" href="/login">Log in</a> to add a Recipe!</p>
+            </div>
+        </div>
+
+        <div class="h-56 flex flex-wrap gap-6 mt-6">
+            <div th:replace="fragments :: view-recipes">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

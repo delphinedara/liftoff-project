@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<div th:replace="fragments :: page-header-logged-in"></div>
+<div class="main-contents">
+
+    <form method="post">
+        <h1 th:text="${title}"></h1>
+        <div class="form-group">
+            <label>Name
+                <input th:field="${cookbook.name}" class="form-control">
+            </label>
+            <p class="error" th:errors="${cookbook.name}"></p>
+        </div>
+
+        <div class="form-group">
+            <label>Recipes to Include:
+                <div th:each="recipe : ${recipes}">
+                    <input type="checkbox" th:id="${recipe.name}" th:value="${recipe.id}" th:field="${cookbook.recipes}">
+                    <label th:for="${recipe.name}" th:text="${recipe.name}"></label>
+                    <br>
+                </div>
+            </label>
+        </div>
+
+        <div class="form-group">
+<!--            <input type="submit" value="Save" class="btn btn-success">-->
+            <button class="btn btn-success">Save</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

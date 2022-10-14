@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<div th:replace="fragments :: page-header-logged-in"></div>
+
+
+<div class="main-contents">
+    <div style="margin:40px; padding:10px; border: 2px solid #FFA500;">
+        <form method="post" th:action="@{'/cookbook/view/'+${cookbook.id}+'/edit'}">
+        <h1 th:text="${cookbook.name}"></h1>
+
+            <ul th:each="recipe : ${cookbook.recipes}">
+                <li>
+                    <input type="checkbox" name="recipeIds" th:id="${recipe.getName()}" th:value="${recipe.getId()}">
+                    <label th:for="${recipe.getName()}">
+                        <a th:text="${recipe.getName()}" th:href="@{'/recipe/view/'+${recipe.getId()}}"></a>
+                    </label>
+                </li>
+            </ul>
+            <br>
+            <button class="btn btn-danger btn-sm">Remove Selected Recipes from Cookbook</button>
+        </form>
+   </div>
+
+
+</div>
+
+</body>
+</html>

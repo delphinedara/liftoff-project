@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<div th:replace="fragments :: page-header-logged-in"></div>
+
+
+<div class="main-contents">
+
+<div th:each="cookbook : ${cookbooks}">
+
+    <p><a class="link-style" th:text="${cookbook.name}" th:href="@{'/cookbook/view/'+${cookbook.id}}"></a></p>
+
+    <ul th:each="recipe : ${cookbook.recipes}">
+        <li th:text="${recipe.getName()}"></li>
+    </ul>
+
+    <br>
+
+</div>
+
+
+</div>
+
+</body>
+</html>

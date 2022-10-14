@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+
+<div th:replace="fragments :: page-header-logged-in"></div>
+
+<div class="main-contents">
+    <div class="mt-16">
+    <form method="post">
+        <h1 th:text="${title}" class="text-3xl"></h1>
+        <div class="mt-12">
+        <div class="form-group">
+            <label>Name
+                <input th:field="${recipe.name}" class="form-control">
+            </label>
+            <p class="error" th:errors="${recipe.name}"></p>
+        </div>
+
+        <div class="form-group">
+            <label>Description
+                <input th:field="${recipe.description}" class="form-control">
+            </label>
+            <p class="error" th:errors="${recipe.description}"></p>
+        </div>
+
+        <div class="form-group">
+            <label>Ingredient List
+                <textarea th:field="${recipe.ingredientList}" class="form-control" rows="3" cols="50"></textarea>
+            </label>
+            <p class="error" th:errors="${recipe.ingredientList}"></p>
+        </div>
+
+        <div class="form-group">
+            <label>Instruction
+                <textarea th:field="${recipe.recipeInstruction}" class="form-control" rows="12" cols="50"></textarea>
+            </label>
+            <p class="error" th:errors="${recipe.recipeInstruction}"></p>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-success">Save</button>
+        </div>
+        </div>
+    </form>
+    </div>
+</div>
+
+
+</body>
+</html>

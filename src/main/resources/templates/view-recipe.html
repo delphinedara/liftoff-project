@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+
+<div th:if="${isUserLoggedIn}">
+    <div th:replace="fragments :: page-header-logged-in"></div>
+</div>
+<div th:unless="${isUserLoggedIn}">
+    <div th:replace="fragments :: page-header"></div>
+</div>
+
+
+
+<div class="main-contents">
+    <div style="padding:10px; border: 2px solid #FFA500;">
+        <h1 class="text-lg" th:text="${recipe.name}"></h1>
+        <h2 th:text="${recipe.description}"></h2>
+        <p>by <a class="link-style" th:text="${recipeAuthor}" th:href="@{'/search/list-recipes/'+ ${recipe.recipeAuthor.getId()}}"></a></p>
+
+
+        <div class="mt-4">
+            <p style="color:dark-grey;" class="text-lg">Ingredient List</p>
+            <p style="white-space: pre-line" th:text="${recipe.ingredientList}"></p>
+        </div>
+
+        <div class="mt-4">
+            <h6 style="color:dark-grey;" class="text-lg">Preparation</h6>
+            <p style="white-space: pre-line" th:text="${recipe.recipeInstruction}"></p>
+        </div>
+
+        <br>
+        <br>
+        <!--        Save Recipe Button -->
+        <div style="margin: 4px;" th:if="${isUserLoggedIn and !userLoggedIn.equals(recipeAuthor) and !userHasRecipeSaved}">
+            <form method="post" th:action="@{'/recipe/view/'+${recipe.id}+'/saveRecipe'}">
+                <input type="hidden" name="recipesId" th:value="${recipe.id}">
+                <button name="save" value="Save Recipe" class="btn btn-success">Save Recipe</button>
+            </form>
+        </div>
+
+        <div th:if="${userHasRecipeSaved}">
+            <p style="color: green;">This recipe is saved!</p>
+        </div>
+
+        <hr>
+        <div th:if="${isUserLoggedIn and userLoggedIn.equals(recipeAuthor)}">
+            <!--        Delete Recipe Button -->
+            <div style="margin: 4px;">
+                <form th:action="'/recipe/delete/'+ ${recipe.id}" method="post">
+                    <button   class="btn btn-danger btn-sm"
+                              onClick="if(!(confirm('Are you sure you want to delete this recipe')))" return false>
+                        Delete
+                    </button>
+                </form>
+            </div>
+            <!--        Edit Recipe Button -->
+            <div style="margin: 4px;">
+                <form th:action="'/recipe/edit/'+ ${recipe.id}" method="get">
+                    <button   class="btn btn-primary btn-sm"> Edit </button>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+        <!--        Add to Cookbook -->
+        <div style="margin: 4px;" th:if="${isUserLoggedIn}" class="mt-4">
+            <form method="post" th:action="@{'/cookbook/view'}">
+                <input type="hidden" name="recipesId" th:value="${recipe.id}">
+                <select name="cookbookId">
+                    <option value="" disabled selected>Add to Cookbook</option>
+                    <option th:each="cookbook : ${cookbooks}" th:text="${cookbook.getName()}" th:value="${cookbook.getId()}"></option>
+                </select>
+                <input type="hidden" name="recipeId" th:value="${recipe.id}">
+                <button name="save" value="Add to Cookbook" class="btn btn-success">Add</button>
+            </form>
+        </div>
+
+    </div>
+
+    <br>
+    <br>
+
+    <!--    Comments   -->
+    <div style="margin: 10px;">
+        <h2 style="font-size: large; font-weight: bold;">Comments</h2>
+        <div style="margin: 4px; padding: 4px;">
+            <div th:each="comment : ${comments}">
+                <p th:text="${comment.commentBody}"></p>
+                <p>-
+                    <a class="link-style" th:text="${comment.user.getUsername()}" th:href="@{'/search/list-recipes/'+ ${comment.user.getId()}}"></a>
+                </p>
+                <br>
+            </div>
+        </div>
+
+        <div th:if="${isUserLoggedIn}">
+            <form method="post" th:action="@{'/recipe/view/'+${recipe.id}+'/postComment'}">
+                <div class="form-group">
+                    <label>Add a Comment:
+                        <textarea th:field="${comment.commentBody}" class="form-control" rows="3" cols="50"></textarea>
+                    </label>
+                </div>
+                <p class="error" th:errors="${comment.commentBody}"></p>
+
+                <div class="stars">
+                    <a>⭐</a>
+                    <a>⭐</a>
+                    <a>⭐</a>
+                    <a>⭐</a>
+                    <a>⭐</a>
+                </div>
+
+                <div class="form-group">
+                    <label>Rating:
+                        <select th:field="${comment.rating}">
+                            <option th:each="aRating : ${ratings}" th:text="${aRating}" th:value="${aRating}"></option>
+                        </select>
+                    </label>
+
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-success">Add Comment</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+

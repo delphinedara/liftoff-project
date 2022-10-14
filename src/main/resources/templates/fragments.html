@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title th:text="${title}">Recipe App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+<!--Nav bar  -when not logged in - starting with Tailwind-->
+<div th:fragment="page-header">
+    <!--<div x-data="{ cartOpen: false, isOpen: false}" class="bg-white">-->
+    <div class="h-48 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500">
+        <div class="container mx-0 px-6 py-3">
+            <div class="flex items-center justify-between">
+                <a class="w-full text-gray-700 md:text-left text-3xl font-semibold" th:href="@{/}">Epic Recipe Tracker</a>
+            </div>
+        </div>
+        <nav :class="isOpen ? '' : 'hidden'" class="sm:flex sm:justify-center sm:items-center mt-4">
+            <div class="flex space-x-96 flex-col sm:flex-row">
+                <a class="mt-3 space-y-14 text-gray-600 hover:underline sm:mx-3 sm:mt-0" th:href="@{/register}">Sign Up</a>
+                <a class="mt-3 space-y-14 text-gray-600 hover:underline sm:mx-3 sm:mt-0" th:href="@{/login}">Sign In</a>
+                <a class="mt-3 space-y-14 text-gray-600 hover:underline sm:mx-3 sm:mt-0" th:href="@{/settings}">Settings</a>
+            </div>
+
+            <div class="relative mr-4">
+                   <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                     <svg class="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
+                       <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                     </svg>
+                   </span>
+<!--                <form method="post" th:action="@{'search/list-recipes/results'}">-->
+                <form method="post" action="/search/list-recipes/results">
+                    <input type="text" th:name="searchTerm" th:value="${searchTerm}" class="w-64 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="Search">
+                </form>
+
+            </div>
+        </nav>
+    </div>
+</div>
+
+<!--Nav bar  - when logged in - starting with Bootstrap -->
+<div th:fragment="page-header-logged-in">
+    <nav class="navbar navbar-expand-md navbar-light" style="background-color: #FFA500;" th:fragment="header">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" th:href="@{/home}">Epic Recipe Tracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/home}"> Recipes</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/recipe/add}">Add Recipe</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/cookbook/view}">My Cookbooks</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/cookbook/add}">Add Cookbook</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div >
+                <a th:href="@{/logout}">
+                    <button type="submit" class="btn btn-outline-dark">Logout</button>
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<!--Nav bar  - OLD-->
+<div th:fragment="page-header-old">
+    <div style="background-color:orange; border-radius:6px;">
+        <div style="color:black; padding:20px;">
+            <a th:href="@{/}" style="color:black; font-size:large;">Recipe App - placeholder header</a>
+        </div>
+        <div style="color:black; padding:20px;"><a th:href="@{/home}" style="color:black; font-size:large;">User Home</a></div>
+        <div style="color:black; padding:20px;"><a th:href="@{/logout}" style="color:black; font-size:large;">Log Out</a></div>
+    </div>
+</div>
+
+<!--Displaying Recipes- newest - Tailwind with image-->
+<div th:fragment="view-recipes"   th:each="recipe : ${recipes}">
+        <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+            <div class="flex items-end justify-end h-64 w-64 bg-cover mx-auto" th:style="'background-image:url('+${recipe.imageFileLocation}+');'">
+            </div>
+            <div class="px-5 py-3">
+                <a th:href="@{'/recipe/view/'+${recipe.id}}" class="hover:bg-sky-700 uppercase" th:text="${recipe.name}">Banana Bread</a>
+                <p th:if="${recipe.averageRating.equals(1)}" class="grey-star">&#11088;</p>
+                <p th:if="${recipe.averageRating.equals(2)}">⭐⭐</p>
+                <p th:if="${recipe.averageRating.equals(3)}">⭐⭐⭐</p>
+                <p th:if="${recipe.averageRating.equals(4)}">⭐⭐⭐⭐</p>
+                <p th:if="${recipe.averageRating.equals(5)}">⭐⭐⭐⭐⭐</p>
+            </div>
+        </div>
+</div>
+
+
+<div th:fragment="view-savedRecipes" th:each="recipe : ${savedRecipes}">
+    <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+        <div class="flex items-end justify-end h-64 w-64 bg-cover mx-auto" th:style="'background-image:url('+${recipe.imageFileLocation}+');'">
+        </div>
+        <div class="px-5 py-3">
+            <a th:href="@{'/recipe/view/'+${recipe.id}}" class="hover:bg-sky-700 uppercase" th:text="${recipe.name}">Banana Bread</a>
+        </div>
+    </div>
+</div>
+
+<!--Displaying Recipes - OLD!-->
+<div th:fragment="view-recipes-old">
+    <div th:each="recipe : ${recipes}" style="border: 2px solid gray; padding: 10px; margin: 6px;">
+        <a th:href="@{'/recipe/view/'+${recipe.id}}"><h3 th:text="${recipe.name}"></h3><p th:text="${recipe.averageRating + ' stars'}"></p></a>
+        <p th:text="${recipe.description}"></p>
+    </div>
+</div>
+
+<div th:fragment="view-savedRecipes-old">
+    <div th:each="recipe : ${savedRecipes}">
+        <a th:href="@{'/recipe/view/'+${recipe.id}}"><h3 th:text="${recipe.name}"></h3></a>
+        <h4 th:text="${recipe.description}"></h4>
+    </div>
+</div>
+
+<div th:fragment="searchBar">
+    <form method="post" action="/search/list-recipes/results">
+        <input class="w-64 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="Search" type="text" th:name="searchTerm" th:value="${searchTerm}">
+    </form>
+</div>
+
+</body>
+</html>
+
