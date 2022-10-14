@@ -17,7 +17,7 @@ Recipe Tracker App offers step by step instructions on how to make different cui
 * Tailwind CSS
 * Thymeleaf templates
 
-### MIT License 
+### MIT License / Contributors
  * Copyright(c) 2022 Elizabeth Beckerle, Delphine Dara, Cortesha Rosa Robinson
 
 ### Project Tracker
