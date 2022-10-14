@@ -21,4 +21,5 @@ Recipe Tracker App offers step by step instructions on how to make different cui
  * Copyright(c) 2022 Elizabeth Beckerle, Delphine Dara, Cortesha Rosa Robinson
 
 ### Project Tracker
-Trello board https://trello.com/b/qGDnEPnJ/liftoff-project-team-sabrina 
+* Trello board https://trello.com/b/qGDnEPnJ/liftoff-project-team-sabrina 
+ 
